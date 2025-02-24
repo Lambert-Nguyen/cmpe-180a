@@ -1,0 +1,16 @@
+02/20/25 Lecture
+We had a great lecture last night with a lot of great questions and great participation from many students! lets keep the great work for the upcoming classes.
+
+We covered topics like:
+
+Class definition & implementation
+default arguments
+const methods
+iterartors forward, backward, const
+When to pass by reference or value
+when to return by value or reference
+Time and space complexity
+Arithmetic and geometric series
+Class vs Object: representation of an object in memory
+The this pointer and its justification
+We also reviewed ways to have a function return multiple values or items. We stressed the importance of not using C type strings and instead using C++ string class
