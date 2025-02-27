@@ -24,7 +24,6 @@ bool readMatrix(const string& filename, vector<vector<int>>& matrix, int& rows, 
 
     string line;
 
-    // Read matrix dimensions
     while (getline(file, line)) {
         if (!line.empty()) break;
     }
