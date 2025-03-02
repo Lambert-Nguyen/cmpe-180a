@@ -22,5 +22,9 @@ int main(int argc, char *argv[]){
     XYPoint cc(x, y);
     cout << "Parameterized constructor called: " << cc.getX() << " " << cc.getY() << endl;
 
+    cout << cc.getX() <<endl;
+    cout << cc.getY() <<endl;
+    cout << dd.getX() <<endl;
+    cout << dd.getY() <<endl;
 
 }
