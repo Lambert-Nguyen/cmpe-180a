@@ -14,3 +14,37 @@ Arithmetic and geometric series
 Class vs Object: representation of an object in memory
 The this pointer and its justification
 We also reviewed ways to have a function return multiple values or items. We stressed the importance of not using C type strings and instead using C++ string class
+
+----------------------------------------------------------------
+03/06/2025 Lecture:
+
+Operator overload:
+
+Binary operators:
+a+b
+a*b
+a-b
+:
+;
+---> member function
+
+Unary operators:
+!a
+-a
+--a
+a++
+a[i]
+---> function??
+
+Binary operators:
+cout<<a;
+cin>>b;
+---> class function??
+
+Friend function:
+class XYPoint {
+    friend operator <<(...);
+    XYPoint operator+(arg)
+    *****Make use of "this" pointer****
+    bool operator!(){}
+}
