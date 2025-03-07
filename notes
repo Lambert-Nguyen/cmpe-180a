@@ -48,3 +48,8 @@ class XYPoint {
     *****Make use of "this" pointer****
     bool operator!(){}
 }
+
+------------------------
+Linked list
+shallow copy vs deep copy
+time complexity
