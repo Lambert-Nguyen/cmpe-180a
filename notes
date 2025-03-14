@@ -75,9 +75,6 @@ General case: f(n) = f(n=1)*n
 Base case: f(0)=f(1)=1, f(2)=2f(1)
 
 *** Check for 2 things: generalcase + base case when programming ***
-
-Backtracking
-
 Types of recursion:
 -Direct
 -Indirect: f->B->f or f->B->A->f
@@ -88,3 +85,14 @@ Types of recursion:
         INT 3
         f(4)
         } --> tail recursion
+
+int factorial(int n){
+    if ((n=0)||(n==1)) return 1; //base case
+    return n*factorial(n-1); //general case
+    }
+
+Space complexity?? different than time complexity
+
+Backtracking
+
+
