@@ -56,6 +56,8 @@ time complexity
 ----------------------------------------------------------------
 03/13/2025:
 
+midterm will be 5 coding questions, covering C++ classes, overloading, template
+
 f(vector<int> v, size){
     for (i=0;i<size;i++){
         v[i] = i*i;
@@ -64,3 +66,25 @@ f(vector<int> v, size){
 
 The problem for the above function is we should not passing the "size" since there will be inconsistance in vector and the "sie that being passed"
 The correct way should be passing the vector only, using vector size function and use pushback for inserting data.
+
+### We should pass by reference and use const if you don't want the variable being changed ###
+(recursion is not the best solution for factorio)
+Recursion -> factorio
+
+General case: f(n) = f(n=1)*n
+Base case: f(0)=f(1)=1, f(2)=2f(1)
+
+*** Check for 2 things: generalcase + base case when programming ***
+
+Backtracking
+
+Types of recursion:
+-Direct
+-Indirect: f->B->f or f->B->A->f
+-tail recursion: when the function is called at the end of the function
+    f(){
+        INT 1
+        INT 2
+        INT 3
+        f(4)
+        } --> tail recursion
