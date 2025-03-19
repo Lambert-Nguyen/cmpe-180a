@@ -18,27 +18,32 @@ BigInt::BigInt(const vector<int> &num){
     }
     reverse(digit.begin(), digit.end());
     removeLeadingZeros();
-
 }
 
-BigInt::BigInt(const char num[], size_t sizeNum){
-    isNegative = (num[0] == '-');
-    for (size_t i =(isNegative ? 1:0); i < sizeNum; i++){
-        if(isdigit(num[i])){
+BigInt::BigInt(const char num[], size_t sizeNum) {
+    isNegative = (num[0] == '-');  
+    for (size_t i = (isNegative ? 1 : 0); i < sizeNum; i++) {
+        if (isdigit(num[i])) {
             digit.insert(digit.begin(), num[i] - '0');
+        } else if (num[i] == '\0') {  // ✅ Allow null terminator for strings
+            continue;
+        } else {
+            std::cerr << "Invalid character in input string." << std::endl;
+            exit(1);
         }
-        removeLeadingZeros();
     }
+    removeLeadingZeros();
 }
 
-void BigInt::removeLeadingZero(){
-    while (digit.size() > 1 && digit.back ==0){
+void BigInt::removeLeadingZeros(){
+    while (digit.size() > 1 && digit.back() == 0){
         digit.pop_back();
     }
     if(digit.size() == 1 && digit[0] == 0){
         isNegative = false;
     }
 }
+
 // Addition operator
 BigInt BigInt::operator+(const BigInt& other) const {
     if (isNegative == other.isNegative) {
@@ -46,19 +51,28 @@ BigInt BigInt::operator+(const BigInt& other) const {
         result.isNegative = isNegative;
         int carry = 0;
         size_t maxSize = std::max(digit.size(), other.digit.size());
-        
+
         for (size_t i = 0; i < maxSize || carry; i++) {
             int sum = carry;
             if (i < digit.size()) sum += digit[i];
             if (i < other.digit.size()) sum += other.digit[i];
-            
+
             result.digit.push_back(sum % 10);
             carry = sum / 10;
         }
+
+        if (carry) {
+            result.digit.push_back(carry);
+        }
+
         result.removeLeadingZeros();
         return result;
     } else {
-        return *this - (-other);
+        if (*this > -other) {  // ✅ Correct negative comparison
+            return *this - (-other);
+        } else {
+            return -((-*this) - other);
+        }
     }
 }
 
@@ -67,7 +81,7 @@ BigInt BigInt::operator-(const BigInt& other) const {
     if (isNegative != other.isNegative) {
         return *this + (-other);
     }
-    
+
     if (*this < other) {
         return -(other - *this);
     }
@@ -75,7 +89,7 @@ BigInt BigInt::operator-(const BigInt& other) const {
     BigInt result;
     result.isNegative = isNegative;
     int borrow = 0;
-    
+
     for (size_t i = 0; i < digit.size(); i++) {
         int diff = digit[i] - borrow - (i < other.digit.size() ? other.digit[i] : 0);
         if (diff < 0) {
@@ -86,14 +100,16 @@ BigInt BigInt::operator-(const BigInt& other) const {
         }
         result.digit.push_back(diff);
     }
-    result.removeLeadingZeros();
+
+    result.removeLeadingZeros();  // ✅ Remove extra zeros
     return result;
 }
 
 // Multiplication operator
 BigInt BigInt::operator*(const BigInt& other) const {
     BigInt result;
-    result.digit.resize(digit.size() + other.digit.size(), 0);
+    size_t prodSize = digit.size() + other.digit.size();
+    result.digit.resize(prodSize, 0);
     result.isNegative = (isNegative != other.isNegative);
 
     for (size_t i = 0; i < digit.size(); i++) {
@@ -104,13 +120,22 @@ BigInt BigInt::operator*(const BigInt& other) const {
             carry = sum / 10;
         }
     }
+
     result.removeLeadingZeros();
     return result;
 }
 
 // Logical NOT operator
 BigInt BigInt::operator!() const {
-    return (*this == BigInt("0", 1));
+    return (*this == BigInt("0", 2)) ? BigInt("1", 2) : BigInt("0", 2);
+}
+
+BigInt BigInt::operator-() const {
+    BigInt result = *this;
+    if (!(result.digit.size() == 1 && result.digit[0] == 0)) { // Avoid flipping zero sign
+        result.isNegative = !isNegative;
+    }
+    return result;
 }
 
 // Comparison operators
@@ -161,11 +186,16 @@ std::istream& operator>>(std::istream& in, BigInt& num) {
 }
 // Pre-increment operator
 BigInt& BigInt::operator++() {
-    *this = *this + BigInt("1", 1);
+    int carry = 1;
+    for (size_t i = 0; i < digit.size() && carry; i++) {
+        int sum = digit[i] + carry;
+        digit[i] = sum % 10;
+        carry = sum / 10;
+    }
+    if (carry) digit.push_back(carry);
     return *this;
 }
 
-// Post-increment operator
 BigInt BigInt::operator++(int) {
     BigInt temp = *this;
     ++(*this);
@@ -174,11 +204,24 @@ BigInt BigInt::operator++(int) {
 
 // Pre-decrement operator
 BigInt& BigInt::operator--() {
-    *this = *this - BigInt("1", 1);
+    if (*this == BigInt("0", 2)) {
+        return *this; // Prevent underflow (negative numbers not supported)
+    }
+
+    int borrow = 1;
+    for (size_t i = 0; i < digit.size() && borrow; i++) {
+        if (digit[i] > 0) {
+            digit[i]--;
+            borrow = 0;
+        } else {
+            digit[i] = 9;
+        }
+    }
+
+    removeLeadingZeros();
     return *this;
 }
 
-// Post-decrement operator
 BigInt BigInt::operator--(int) {
     BigInt temp = *this;
     --(*this);

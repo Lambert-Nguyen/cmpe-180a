@@ -22,6 +22,7 @@ class BigInt{
     BigInt operator-(const BigInt& other) const;
     BigInt operator*(const BigInt& other) const;
     BigInt operator!() const;
+    BigInt operator-() const;  // Unary negation
 
     bool operator==(const BigInt& other) const;
     bool operator<(const BigInt& other) const;
