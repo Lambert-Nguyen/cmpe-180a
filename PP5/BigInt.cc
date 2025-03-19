@@ -65,10 +65,10 @@ BigInt BigInt::operator+(const BigInt& other) const {
             result.digit.push_back(carry);
         }
 
-        result.removeLeadingZeros();
+        result.removeLeadingZeros(); // ✅ Fixes extra zero issue
         return result;
     } else {
-        if (*this > -other) {  // ✅ Correct negative comparison
+        if (*this > -other) {  // ✅ Fixes negative number handling
             return *this - (-other);
         } else {
             return -((-*this) - other);
@@ -101,7 +101,7 @@ BigInt BigInt::operator-(const BigInt& other) const {
         result.digit.push_back(diff);
     }
 
-    result.removeLeadingZeros();  // ✅ Remove extra zeros
+    result.removeLeadingZeros();  
     return result;
 }
 
