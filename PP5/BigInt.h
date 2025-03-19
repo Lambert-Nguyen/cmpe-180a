@@ -11,7 +11,7 @@ class BigInt{
     private:
     std::vector<int> digit;
     bool isNegative;
-    void removeLeadingZero();
+    void removeLeadingZeros();
 
     public: 
     BigInt();
