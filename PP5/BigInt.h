@@ -4,11 +4,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
+
 
 class BigInt{
     private:
     std::vector<int> digit;
     bool isNegative;
+    void removeLeadingZero();
 
     public: 
     BigInt();
