@@ -1,4 +1,5 @@
 #include "BigInt.h"
+#include <iostream>
 
 // Remove leading zeros.
 void BigInt::removeLeadingZeros() {
@@ -88,8 +89,10 @@ BigInt::BigInt(const char* s, int len) {
     } else {
         // Read the digits in normal order then reverse.
         for (int i = index; i < len; i++) {
-            if (!std::isdigit(s[i]))
+            if (!std::isdigit(s[i])) {
+                std::cerr << "Error: Invalid character in input string: " << s[i] << std::endl;
                 throw std::invalid_argument("Invalid character in input string");
+            }
             digits.push_back(s[i] - '0');
         }
         std::reverse(digits.begin(), digits.end());
@@ -109,9 +112,12 @@ BigInt::BigInt(const std::vector<int>& vec) {
         } else {
             sign = 1;
         }
-        for (int d : temp)
-            if (d < 0 || d > 9)
+        for (int d : temp) {
+            if (d < 0 || d > 9) {
+                std::cerr << "Error: Invalid digit in vector: " << d << std::endl;
                 throw std::invalid_argument("Invalid digit in vector");
+            }
+        }
         auto it = temp.begin();
         while (it != temp.end() - 1 && *it == 0)
             it++;
@@ -194,8 +200,10 @@ BigInt BigInt::operator*(const BigInt &other) const {
 
 // Overloaded factorial operator.
 BigInt BigInt::operator!() const {
-    if (*this < BigInt(0))
+    if (*this < BigInt(0)) {
+        std::cerr << "Error: Factorial not defined for negative numbers." << std::endl;
         throw std::runtime_error("Factorial not defined for negative numbers.");
+    }
     if (*this <= BigInt(1))
         return BigInt(1);
     BigInt result(1);
