@@ -49,6 +49,7 @@ BigInt BigInt::operator+(const BigInt& other) const {
     if (isNegative == other.isNegative) {
         BigInt result;
         result.isNegative = isNegative;
+        result.digit.clear(); // Clear default 0
         int carry = 0;
         size_t maxSize = std::max(digit.size(), other.digit.size());
 
@@ -57,21 +58,17 @@ BigInt BigInt::operator+(const BigInt& other) const {
             if (i < digit.size()) sum += digit[i];
             if (i < other.digit.size()) sum += other.digit[i];
 
-            result.digit.push_back(sum % 10);
             carry = sum / 10;
+            result.digit.push_back(sum % 10);
         }
 
-        if (carry) {
-            result.digit.push_back(carry);
-        }
-
-        result.removeLeadingZeros(); // ✅ Fixes extra zero issue
+        result.removeLeadingZeros();
         return result;
     } else {
-        if (*this > -other) {  // ✅ Fixes negative number handling
-            return *this - (-other);
+        if (-other > *this) {  
+            return -( (-*this) - other ); // Fixed subtraction order
         } else {
-            return -((-*this) - other);
+            return other - (-*this);
         }
     }
 }
@@ -88,6 +85,7 @@ BigInt BigInt::operator-(const BigInt& other) const {
 
     BigInt result;
     result.isNegative = isNegative;
+    result.digit.clear(); // Clear default 0
     int borrow = 0;
 
     for (size_t i = 0; i < digit.size(); i++) {
