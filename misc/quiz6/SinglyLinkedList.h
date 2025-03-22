@@ -29,6 +29,15 @@ class SinglyLinkedList {
     Node* head;
     int listSize;
     public:
+    SinglyLinkedList();
+    SinglyLinkedList(int datainit);
+    ~SinglyLinkedList();
+    void insertAtHead(const int& data_i);
+    void insertAtTail(const int& data_i);
+    int size() const;
+    int empty() const;
+    void insertAtPosition(const int& data_i, int position_i);
+    int getPosition(int position_i) const;
 };
 
 #endif
