@@ -16,11 +16,11 @@ class Node {
 
     Node(){
         data = 0;
-        next = NULL;
+        next = nullptr;
     }
     Node(int data_i){
         this->data=data_i;
-        this->next=NULL;
+        this->next=nullptr;
     }
 };
 
@@ -30,7 +30,7 @@ class SinglyLinkedList {
     int listSize;
     public:
     SinglyLinkedList();
-    SinglyLinkedList(int datainit);
+    SinglyLinkedList(int dataInit);
     ~SinglyLinkedList();
     void insertAtHead(const int& data_i);
     void insertAtTail(const int& data_i);
