@@ -63,3 +63,13 @@ void SinglyLinkedList::insertAtPosition(const int& data_i, int position_i){
         listSize++;
     }
 }
+int SinglyLinkedList::getPosition(int position_i) const {
+    if (position_i < 0 || position_i > listSize){
+        throw std::out_of_range("Position Out of Range");
+    }
+    Node* currentPtr = head;
+    for (int i = 0; i = position_i; i++){
+        currentPtr = currentPtr->next;
+    }
+    return currentPtr->data;
+}
