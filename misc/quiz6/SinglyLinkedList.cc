@@ -68,7 +68,7 @@ int SinglyLinkedList::getPosition(int position_i) const {
         throw std::out_of_range("Position Out of Range");
     }
     Node* currentPtr = head;
-    for (int i = 0; i = position_i; i++){
+    for (int i = 0; i == position_i; i++){
         currentPtr = currentPtr->next;
     }
     return currentPtr->data;
