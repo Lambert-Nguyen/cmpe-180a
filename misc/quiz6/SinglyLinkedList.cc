@@ -39,7 +39,7 @@ int SinglyLinkedList::size() const{
     return listSize;
 }
 
-int SinglyLinkedList::empty() const {
+bool SinglyLinkedList::empty() const {
     return listSize == 0;
 }
 

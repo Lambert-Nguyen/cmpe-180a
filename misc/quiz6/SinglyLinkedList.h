@@ -36,7 +36,7 @@ class SinglyLinkedList {
     void insertAtHead(const int& data_i);
     void insertAtTail(const int& data_i);
     int size() const;
-    int empty() const;
+    bool empty() const;
     void insertAtPosition(const int& data_i, int position_i);
     int getPosition(int position_i) const;
 };
