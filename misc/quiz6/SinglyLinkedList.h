@@ -8,6 +8,7 @@
 #define SINGLYLINKEDLIST_H
 
 #include <cstddef>
+#include <iostream>
 
 class Node {
     public:

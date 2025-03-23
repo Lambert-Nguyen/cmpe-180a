@@ -42,3 +42,24 @@ int SinglyLinkedList::size() const{
 int SinglyLinkedList::empty() const {
     return listSize == 0;
 }
+
+void SinglyLinkedList::insertAtPosition(const int& data_i, int position_i){
+    if(position_i < 0 || position_i > listSize){
+        std::cerr << "ERROR: Invalid position input" << std::endl;
+        throw std::out_of_range("Position out of range");
+    }
+    if(position_i==0){
+        insertAtHead(data_i);
+    } else if (position_i==listSize){
+        insertAtTail(data_i);
+    } else {
+        Node* newNode = new Node(data_i);
+        Node* currentNodePtr = head;
+        for (int i = 0; i < position_i-1; i++){
+            currentNodePtr = currentNodePtr->next;
+        }
+        newNode->next = currentNodePtr->next;
+        currentNodePtr->next = newNode;
+        listSize++;
+    }
+}
